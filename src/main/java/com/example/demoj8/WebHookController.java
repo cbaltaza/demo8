@@ -1,23 +1,28 @@
 package com.example.demoj8;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@RestController(value = "/webhook")
+@RestController
+@RequestMapping("/webhook")
 @CrossOrigin(origins = {"http://localhost:80", "http://localhost:4200", "http://localhost:8080", "http://localhost"})
 public class WebHookController {
-
+ private static final Logger log = LoggerFactory.getLogger(WebHookController.class);
  
 	@Autowired
 	private RestTemplate restTemplate;
@@ -36,17 +41,11 @@ public class WebHookController {
 			@ApiResponse(code = 500, message = "Internal Server Error", response = Solicitud.class) })
 	@PostMapping(value = "/getinvoice", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createContentSM(@RequestBody Webhook solicitud) {
-    	String url = "https://sandbox.belvo.com/api/token/";
     	HttpHeaders headers = new HttpHeaders();
     	headers.setContentType(MediaType.APPLICATION_JSON);
-    	Solicitud soli = new Solicitud();
-    	soli.setId("33e035a2-4d13-467c-ab7c-0f7a3d1605cc");
-    	soli.setPassword("5yGpoWU87*njiK7_cObWozHNv465lbFqPhdxBww4b5#O_t0LF7Oou7L@Mtpi*Lht");
-    	soli.setScopes("read_institutions,write_links,read_consents,write_consents,write_consent_callback,delete_consents");
     	
-    	HttpEntity<Solicitud> request = new HttpEntity<>(soli, headers);
-
-		ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+    	log.info("Entrada {}", solicitud);
+		ResponseEntity<String> response = new ResponseEntity<>("{\"status_code\":200}", HttpStatus.ACCEPTED);
 
 
         return response;
