@@ -79,6 +79,26 @@ public String getExternal_id() {
 public void setExternal_id(String external_id) {
 	this.external_id = external_id;
 }
+@Override
+public String toString() {
+	StringBuilder builder = new StringBuilder();
+	builder.append("Webhook [webhook_id=");
+	builder.append(webhook_id);
+	builder.append(", webhook_type=");
+	builder.append(webhook_type);
+	builder.append(", webhook_code=");
+	builder.append(webhook_code);
+	builder.append(", link_id=");
+	builder.append(link_id);
+	builder.append(", request_id=");
+	builder.append(request_id);
+	builder.append(", external_id=");
+	builder.append(external_id);
+	builder.append("]");
+	return builder.toString();
+}
+
+
  
-	
+
 }
