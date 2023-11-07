@@ -7,11 +7,24 @@ public class Webhook {
  private String    link_id;
  private String    request_id;
  private String    external_id;
+ private Data data;
 /**
  * @return the webhook_id
  */
 public String getWebhook_id() {
 	return webhook_id;
+}
+/**
+ * @return the data
+ */
+public Data getData() {
+	return data;
+}
+/**
+ * @param data the data to set
+ */
+public void setData(Data data) {
+	this.data = data;
 }
 /**
  * @param webhook_id the webhook_id to set
