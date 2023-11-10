@@ -1,10 +1,15 @@
 package com.example.demoj8;
 
+import java.util.Base64;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -20,8 +25,13 @@ public class ClienteImpl implements Cliente {
 	public void consultarDatos(String id) {
 		String uRLf = "https://api.belvo.com/api/invoices/?link={id}";
 		String uRLAux = uRLf.replace("{id}", id);
-		
-		ResponseEntity<String> salida = restTemplate.getForEntity(uRLAux, String.class);
+		   String userAndPass = "33e035a2-4d13-467c-ab7c-0f7a3d1605cc:5yGpoWU87*njiK7_cObWozHNv465lbFqPhdxBww4b5#O_t0LF7Oou7L@Mtpi*Lht";
+
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_XML);
+	    headers.add("Authorization", "Basic " +  Base64.getEncoder().encodeToString(userAndPass.getBytes()));
+	    
+		ResponseEntity<String> salida = restTemplate.getForEntity(uRLAux, String.class, headers);
 		
 		log.info("Datos de Salida del metodo post para Guardar en base de datos", salida);
 		
