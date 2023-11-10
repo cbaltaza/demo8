@@ -5,7 +5,9 @@ import java.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,7 +33,7 @@ public class ClienteImpl implements Cliente {
 	    headers.setContentType(MediaType.APPLICATION_XML);
 	    headers.add("Authorization", "Basic " +  Base64.getEncoder().encodeToString(userAndPass.getBytes()));
 	    
-		ResponseEntity<String> salida = restTemplate.getForEntity(uRLAux, String.class, headers);
+		ResponseEntity<String> salida = restTemplate.exchange(uRLAux, HttpMethod.GET, new HttpEntity<Object>(headers), String .class);
 		
 		log.info("Datos de Salida del metodo post para Guardar en base de datos", salida);
 		
